@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package scenearea;
+
+enum ResultCode {
+  SUCCESS = 0;
+
+}
+
+message EnterSceneRequest {
+  uint64 player_session = 1;
+  string ip_address = 2;  //player service的地址
+  uint32 port = 3;
+  uint32 map_id = 4;
+  uint32 map_copy_idx = 5; //副本编号
+  int32 result_code = 6;  //无用字段，要求传0
+  int32 target_server_idx = 7; //无用字段，要求传0
+  int32 line_id = 8; //无用字段，要求传0
+}
+
+message EnterSceneResponse {
+  ResultCode result = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+service SceneAreaService {
+  /* what: 订阅消息，可订阅SubscribeTopic中的定义的数据信息变化，在该类数据变化时主动通知所有的订阅者
+   * when: 可在游戏启动时进行相关订阅，也可以在游戏过程中按需要进行订阅
+   */
+  rpc EnterScene (EnterSceneRequest) returns (EnterSceneResponse);
+
+
+
+}
